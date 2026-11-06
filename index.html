@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no" />
+    <meta name="theme-color" content="#0e0c0a" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <!-- Opaque bar ("black-translucent" makes iOS 26 lay the web view out a status-bar height short — WebKit 301108).
+         "default" lets the bar follow theme-color, which lib/theme.ts switches with the app theme. -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Umber" />
+    <script>
+      // iOS colours the status bar from theme-color as the app launches, so apply the saved theme before first paint.
+      (function () {
+        try {
+          var t = (JSON.parse(localStorage.getItem('umber:v1:shadow') || '{}').settings || {}).theme || 'dark';
+          if (t === 'system') t = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+          var bg = t === 'light' ? '#f4ede2' : '#0e0c0a';
+          document.documentElement.dataset.theme = t;
+          document.documentElement.style.background = bg;
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', bg);
+          document.querySelector('meta[name="color-scheme"]').setAttribute('content', t);
+        } catch (e) {}
+        // ?icon=<id>: the page was opened from Settings → Uygulama ikonu to be re-added with another icon.
+        try {
+          var icon = new URLSearchParams(location.search).get('icon');
+          if (icon && /^[a-zA-Z]{2,20}$/.test(icon)) {
+            var swap = function () {
+              var touch = document.querySelector('link[rel="apple-touch-icon"]');
+              if (touch) touch.href = touch.href.replace(/[^/]+\.png$/, 'icons/' + icon + '.png');
+              var man = document.querySelector('link[rel="manifest"]');
+              if (man) man.href = man.href.replace(/[^/]+$/, 'manifests/' + icon + '.webmanifest');
+              document.title = 'Umber';
+            };
+            swap();
+            document.addEventListener('DOMContentLoaded', swap);
+          }
+        } catch (e) {}
+      })();
+    </script>
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="description" content="Kişisel İngilizce öğrenme uygulaması" />
+    <link rel="icon" href="/umber/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/umber/apple-touch-icon.png" />
+    <title>Umber</title>
+    <style>
+      html, body { background: #0e0c0a; margin: 0; }
+      html[data-theme='light'], html[data-theme='light'] body, html[data-theme='light'] #splash { background: #f4ede2; }
+      #splash { position: fixed; inset: 0; display: grid; place-items: center; background: #0e0c0a; }
+      #splash span { font: italic 300 64px/1 Georgia, serif; color: #e3a75c; opacity: .9; }
+    </style>
+    <script type="module" crossorigin src="/umber/assets/index-DmgN5URe.js"></script>
+    <link rel="stylesheet" crossorigin href="/umber/assets/index-CVqfVekp.css">
+  <link rel="manifest" href="/umber/manifest.webmanifest"></head>
+  <body>
+    <div id="splash"><span>u</span></div>
+    <div id="root"></div>
+  </body>
+</html>

@@ -1,0 +1,23 @@
+{
+ "name": "Umber",
+ "short_name": "Umber",
+ "lang": "tr",
+ "display": "standalone",
+ "orientation": "portrait",
+ "start_url": "../",
+ "scope": "../",
+ "background_color": "#0e0c0a",
+ "theme_color": "#0e0c0a",
+ "icons": [
+  {
+   "src": "../icons/noir.png",
+   "sizes": "180x180",
+   "type": "image/png"
+  },
+  {
+   "src": "../icons/noir-512.png",
+   "sizes": "512x512",
+   "type": "image/png"
+  }
+ ]
+}
